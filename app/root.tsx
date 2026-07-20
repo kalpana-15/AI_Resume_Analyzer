@@ -5,13 +5,11 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigation,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import {usePuterStore} from "~/lib/puter";
-import { useEffect} from "react";
-
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -26,12 +24,6 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { init }= usePuterStore();
-
-  useEffect(() => {
-      init();
-    }, [init]);
-
   return (
     <html lang="en">
       <head>
@@ -41,7 +33,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-      <script src="https://js.puter.com/v2/"></script>
       {children}
         <ScrollRestoration />
         <Scripts />
@@ -51,7 +42,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const navigation = useNavigation();
+  const isNavigating = navigation.state !== "idle";
+
+  return (
+    <>
+      {/* Global Navigation Progress Bar */}
+      <div 
+        className={`fixed top-0 left-0 h-1 bg-[#a5e1f3] z-[9999] transition-all duration-300 ease-in-out ${
+          isNavigating ? 'w-2/3 opacity-100 animate-pulse' : 'w-full opacity-0'
+        }`}
+        style={{
+          boxShadow: '0 0 10px #a5e1f3, 0 0 5px #a5e1f3'
+        }}
+      />
+      <Outlet />
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

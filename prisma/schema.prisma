@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+model User {
+  id                 String               @id @default(uuid())
+  name               String?
+  email              String               @unique
+  passwordHash       String
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  sessions           Session[]
+  resumes            Resume[]
+  passwordResetTokens PasswordResetToken[]
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+}
+
+model Resume {
+  id             String          @id @default(uuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName    String
+  jobTitle       String
+  jobDescription String
+  
+  resumeS3Key    String?
+  imageS3Key     String?
+  
+  versions       ResumeVersion[]
+  analyses       Analysis[]
+  
+  createdAt      DateTime        @default(now())
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model ResumeVersion {
+  id        String     @id @default(uuid())
+  resumeId  String
+  resume    Resume     @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  content   String
+  version   Int        @default(1)
+  feedbacks Feedback[]
+  createdAt DateTime   @default(now())
+}
+
+model Analysis {
+  id               String   @id @default(uuid())
+  resumeId         String
+  resume           Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  atsScore         Int
+  missingKeywords  Json
+  criticalIssues   Json
+  detailedScores   Json?
+  detailedFeedback Json?
+  createdAt        DateTime @default(now())
+}
+
+enum FeedbackStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model Feedback {
+  id              String         @id @default(uuid())
+  resumeVersionId String
+  resumeVersion   ResumeVersion  @relation(fields: [resumeVersionId], references: [id], onDelete: Cascade)
+  targetText      String
+  suggestedText   String
+  rationale       String
+  status          FeedbackStatus @default(PENDING)
+  createdAt       DateTime       @default(now())
+}

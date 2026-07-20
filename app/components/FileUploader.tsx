@@ -27,41 +27,41 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
 
 
     return (
-        <div className="w-full gradient-border">
+        <div className="w-full bg-white/5 border border-white/20 rounded-2xl backdrop-blur-xl p-5 md:p-8 text-center transition-all duration-300 hover:bg-white/10 hover:border-[#a5e1f3]/50 cursor-pointer shadow-[0_0_30px_rgba(165,225,243,0.05)]">
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
 
                 <div className="space-y-4 cursor-pointer">
                     {file ? (
-                        <div className="uploader-selected-file" onClick={(e) => e.stopPropagation()}>
-                            <img src="/images/pdf.png" alt="pdf" className="size-10" />
-                            <div className="flex items-center space-x-3">
-                                <div>
-                                    <p className="text-sm font-medium text-gray-700 truncate max-w-xs">
+                        <div className="flex items-center justify-between p-4 bg-white/10 rounded-xl border border-white/10" onClick={(e) => e.stopPropagation()}>
+                            <img src="/images/pdf.png" alt="pdf" className="size-10 drop-shadow-lg" />
+                            <div className="flex items-center space-x-3 w-full ml-4">
+                                <div className="text-left w-full">
+                                    <p className="text-[0.95rem] font-bold text-white truncate max-w-[200px] md:max-w-xs">
                                         {file.name}
                                     </p>
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-[0.8rem] text-[#b4a8d1]">
                                         {formatSize(file.size)}
                                     </p>
                                 </div>
                             </div>
-                            <button className="p-2 cursor-pointer" onClick={(e) => {
+                            <button className="p-2 cursor-pointer hover:scale-110 transition-transform" onClick={(e) => {
                                 onFileSelect?.(null)
                             }}>
-                                <img src="/icons/cross.svg" alt="remove" className="w-4 h-4" />
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff8a8a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                             </button>
                         </div>
                     ): (
-                        <div>
-                            <div className="mx-auto w-16 h-16 flex items-center justify-center mb-2">
-                                <img src="/icons/info.svg" alt="upload" className="size-20" />
+                        <div className="py-2">
+                            <div className="mx-auto w-16 h-16 flex items-center justify-center mb-4 bg-gradient-to-br from-[#a5e1f3]/20 to-[#a5e1f3]/5 rounded-full shadow-[0_0_20px_rgba(165,225,243,0.2)] border border-white/10">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a5e1f3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2-2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                             </div>
-                            <p className="text-lg text-gray-500">
-                                <span className="font-semibold">
+                            <p className="text-[1rem] text-[#b4a8d1] mb-1">
+                                <span className="font-bold text-white">
                                     Click to upload
                                 </span> or drag and drop
                             </p>
-                            <p className="text-lg text-gray-500">PDF (max {formatSize(maxFileSize)})</p>
+                            <p className="text-[0.85rem] text-white/50">PDF (max {formatSize(maxFileSize)})</p>
                         </div>
                     )}
                 </div>

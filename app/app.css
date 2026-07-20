@@ -1,10 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.0.1/index.min.css");
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @theme {
   --font-sans: "Mona Sans", ui-sans-serif, system-ui, sans-serif,
   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-geist: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-general: "General Sans", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-background: hsl(260, 87%, 3%);
+  --color-foreground: hsl(40, 6%, 95%);
+  --color-hero-sub: hsl(40, 6%, 82%);
+
   --color-dark-200: #475467;
   --color-light-blue-100: #c1d3f81a;
   --color-light-blue-200: #a7bff14d;
@@ -20,29 +29,29 @@
 
 html,
 body {
-  @apply bg-white;
+  @apply bg-[#0c051f] text-white;
 }
 
 main {
   @apply min-h-screen pt-10;
 }
 h1 {
-  @apply max-sm:text-[3rem] text-6xl  text-gradient leading-tight xl:tracking-[-2px] font-semibold;
+  @apply max-sm:text-[3rem] text-6xl text-white drop-shadow-lg leading-tight tracking-tight font-extrabold;
 }
 
 h2 {
-  @apply max-sm:text-xl text-3xl text-dark-200;
+  @apply max-sm:text-xl text-3xl text-[#b4a8d1];
 }
 
 label {
-  @apply text-dark-200;
+  @apply text-[#b4a8d1];
 }
 input {
-  @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none bg-white;
+  @apply w-full bg-white/5 border border-white/20 rounded-[10px] py-3 px-4 text-white text-[0.95rem] outline-none transition-all duration-200 focus:border-[#a5e1f3] focus:bg-white/10 focus:shadow-[0_0_0_3px_rgba(165,225,243,0.15)] placeholder-white/30;
 }
 
 textarea {
-  @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none bg-white;
+  @apply w-full bg-white/5 border border-white/20 rounded-[10px] py-3 px-4 text-white text-[0.95rem] outline-none transition-all duration-200 focus:border-[#a5e1f3] focus:bg-white/10 focus:shadow-[0_0_0_3px_rgba(165,225,243,0.15)] placeholder-white/30;
 }
 
 form {
@@ -57,7 +66,7 @@ form {
     @apply bg-gradient-to-b from-light-blue-100 to-light-blue-200 p-4 rounded-2xl;
   }
   .primary-button {
-    @apply primary-gradient text-white rounded-full px-4 py-2 cursor-pointer w-full hover:brightness-110 hover:shadow-lg hover:-translate-y-[1px] transition-all duration-300;
+    @apply bg-[#a5e1f3] text-[#170d37] rounded-[10px] text-[0.85rem] font-bold cursor-pointer transition-all duration-200 hover:opacity-90 active:scale-[0.99] shadow-[0_8px_24px_rgba(165,225,243,0.2)] text-center flex items-center justify-center;
   }
   .resume-nav {
     @apply flex flex-row justify-between items-center p-4 border-b border-gray-200;
@@ -75,21 +84,21 @@ form {
     @apply primary-gradient rounded-full py-4 px-8 cursor-pointer w-[600px] max-md:w-full text-3xl font-semibold text-white;
   }
   .main-section {
-    @apply flex flex-col items-center gap-8 pt-12 max-sm:mx-2 mx-15 pb-5;
+    @apply flex flex-col items-center gap-8 pt-12 max-sm:mx-2 pb-5 w-full;
   }
   .page-heading {
     @apply flex flex-col items-center gap-8 max-w-4xl text-center max-sm:gap-4;
   }
   .resumes-section {
-    @apply flex flex-wrap max-md:flex-col max-md:gap-4 gap-6 items-start max-md:items-center w-full max-w-[1850px] justify-evenly;
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-[1200px] mx-auto px-10 justify-items-center;
   }
 
   .resume-card {
-    @apply flex flex-col gap-8 h-[560px] w-[350px] lg:w-[430px] xl:w-[490px] bg-white rounded-2xl p-4;
+    @apply flex flex-col gap-6 md:gap-8 h-auto md:h-[560px] w-full max-w-[450px] bg-white/5 border border-white/10 rounded-[24px] backdrop-blur-xl p-6 md:p-8 transition-all duration-300 hover:bg-white/10 hover:border-[#a5e1f3]/50 hover:shadow-[0_0_30px_rgba(165,225,243,0.15)];
   }
 
   .resume-card-header {
-    @apply flex flex-row gap-2 justify-between min-h-[110px] max-sm:flex-col items-center max-md:justify-center max-md:items-center;
+    @apply flex flex-row gap-4 justify-between min-h-[110px] max-sm:flex-col items-center max-sm:justify-center;
   }
 
   .feedback-section {
@@ -97,7 +106,7 @@ form {
   }
 
   .navbar {
-    @apply flex flex-row justify-between items-center bg-white/70 backdrop-blur-md shadow-sm border border-white/20 rounded-full p-4 w-full px-10 max-w-[1200px] mx-auto;
+    @apply fixed top-4 md:top-6 z-50 flex flex-row justify-between items-center bg-[#170d37]/20 backdrop-blur-2xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] border border-white/20 rounded-full py-2.5 md:py-3 px-4 md:px-8 w-[calc(100%-2rem)] md:w-full max-w-[1200px] left-1/2 -translate-x-1/2;
   }
 
   .score-badge {
@@ -114,6 +123,82 @@ form {
   .uploader-selected-file {
     @apply flex items-center justify-between p-3 bg-gray-50 rounded-2xl;
   }
+
+  .sidebar-menu-container {
+    @apply flex flex-row md:flex-col gap-2 md:gap-10 w-full relative z-10;
+  }
+
+  .tab-trigger {
+    @apply text-[1rem] font-bold text-white/75 cursor-pointer uppercase tracking-wide transition-all duration-500 relative;
+  }
+  
+  /* Mobile Styles for Tabs */
+  @media (max-width: 767px) {
+    .tab-trigger {
+      @apply flex-1 py-3 text-center rounded-xl bg-black/10;
+    }
+    .tab-trigger.active {
+      @apply text-gray-900 bg-white/70 backdrop-blur-md shadow-sm border border-white/40;
+    }
+  }
+
+  /* Desktop Styles for Interlocking Puzzle Tabs */
+  @media (min-width: 768px) {
+    .tab-trigger {
+      @apply w-full py-5 pr-[40px] text-right;
+    }
+    
+    .tab-trigger.active {
+      @apply text-gray-900 bg-white/70 backdrop-blur-md rounded-l-[30px] w-[85%] self-end shadow-[-6px_4px_15px_rgba(0,0,0,0.05)] pr-[50px] z-20 border-y border-l border-white/40;
+    }
+    
+    .tab-trigger.active::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: 0;
+      width: 30px;
+      height: 30px;
+      background-color: transparent;
+      border-bottom-right-radius: 20px;
+      box-shadow: 10px 10px 0 0 rgba(255,255,255,0.7);
+    }
+    
+    .tab-trigger.active::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      right: 0;
+      width: 30px;
+      height: 30px;
+      background-color: transparent;
+      border-top-right-radius: 20px;
+      box-shadow: 10px -10px 0 0 rgba(255,255,255,0.7);
+    }
+  }
+  
+  .liquid-glass {
+    background: rgba(255, 255, 255, 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
 }
 
 @utility bg-gradient {
@@ -148,5 +233,72 @@ form {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scanVertical {
+  0% {
+    top: 0%;
+  }
+  50% {
+    top: 100%;
+  }
+  100% {
+    top: 0%;
+  }
+}
+
+@utility animate-scan-vertical {
+  animation: scanVertical 2s ease-in-out infinite;
+}
+
+@utility animate-slide-left {
+  animation: slideInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@utility animate-slide-right {
+  animation: slideInRight 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% center;
+  }
+  to {
+    background-position: -200% center;
+  }
+}
+
+@utility animate-shimmer {
+  animation: shimmer 3s linear infinite;
+}
+
+@utility scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
